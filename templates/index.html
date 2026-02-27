@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Processador de Projetos Estratégicos</title>
+</head>
+<body>
+    <h1>Processador de Projetos Estratégicos</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+          <li style="color:red;">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>Selecione o arquivo Excel:</label><br>
+        <input type="file" name="arquivo" accept=".xls,.xlsx"><br><br>
+        <button type="submit">Processar e Gerar PDFs</button>
+    </form>
+
+    {% if arquivos_pdf %}
+    <h2>PDFs Gerados:</h2>
+    <ul>
+        {% for pdf in arquivos_pdf %}
+        <li><a href="{{ pdf | replace('output/', '/'+ 'output/' ) }}" target="_blank">{{ pdf.split('/')[-1] }}</a></li>
+        {% endfor %}
+    </ul>
+    <h3><a href="{{ caminho_excel }}" target="_blank">Download do Excel Consolidado</a></h3>
+    {% endif %}
+</body>
+</html>
